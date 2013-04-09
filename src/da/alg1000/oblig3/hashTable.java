@@ -4,7 +4,6 @@
  */
 package da.alg1000.oblig3;
 
-
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -16,32 +15,33 @@ import java.util.logging.Logger;
  */
 public class hashTable<T> {
 
-    ArrayList<LinkedList<AbstractMap.SimpleEntry<String,T>>> buckets;
+    ArrayList<LinkedList<AbstractMap.SimpleEntry<String, T>>> buckets;
 
     public hashTable(int numberOfBuckets) {
         buckets = new ArrayList<>();
         for (int i = 0; i < numberOfBuckets; i++) {
-            buckets.add(new LinkedList<AbstractMap.SimpleEntry<String,T>>());
+            buckets.add(new LinkedList<AbstractMap.SimpleEntry<String, T>>());
         }
     }
 
     T get(String name) {
         return getBucketFor(name).get(getIndexFor(name)).getValue();
     }
-    void set(String name, T value){
+
+    void set(String name, T value) {
         getBucketFor(name).get(getIndexFor(name)).setValue(value);
     }
 
-    LinkedList<AbstractMap.SimpleEntry<String,T>> getBucketFor(String name) {
+    LinkedList<AbstractMap.SimpleEntry<String, T>> getBucketFor(String name) {
         return buckets.get(getBucketIdFor(name));
     }
 
     int getIndexFor(String name) {
-        LinkedList<AbstractMap.SimpleEntry<String,T>> bucket=getBucketFor(name);
-        int i=0;
-        for(Object o:bucket.toArray()){
-            AbstractMap.SimpleEntry<String,T> entry=(AbstractMap.SimpleEntry<String,T>)o;
-            if(entry.getKey().equals(name)) {
+        LinkedList<AbstractMap.SimpleEntry<String, T>> bucket = getBucketFor(name);
+        int i = 0;
+        for (Object o : bucket.toArray()) {
+            AbstractMap.SimpleEntry<String, T> entry = (AbstractMap.SimpleEntry<String, T>) o;
+            if (entry.getKey().equals(name)) {
                 return i;
             }
             i++;
@@ -77,14 +77,14 @@ public class hashTable<T> {
 
     int getBucketIdFor(String name) {
         int i;
-        String h = hash(name).substring(0, 7);
+        String h = hash(name).substring(0, name.length() < 4 ? name.length() : 7);
         i = Integer.parseInt(h.toLowerCase(), 16);
         return i % buckets.size();
     }
 
     int size() {
         int r = 0;
-        for (LinkedList<AbstractMap.SimpleEntry<String,T>> bucket : buckets) {
+        for (LinkedList<AbstractMap.SimpleEntry<String, T>> bucket : buckets) {
             r += bucket.size();
         }
         return r;
@@ -95,13 +95,14 @@ public class hashTable<T> {
     }
 
     void add(String name, T value) {
-        boolean add = getBucketFor(name).add(new AbstractMap.SimpleEntry<>(name,value));
+        boolean add = getBucketFor(name).add(new AbstractMap.SimpleEntry<>(name, value));
     }
-    void remove(String name){
-        int i=0;
-        LinkedList<AbstractMap.SimpleEntry<String,T>> bucket= getBucketFor(name);
-        for(AbstractMap.SimpleEntry<String,T> se : bucket){
-            if(se.getKey().equals(name)){
+
+    void remove(String name) {
+        int i = 0;
+        LinkedList<AbstractMap.SimpleEntry<String, T>> bucket = getBucketFor(name);
+        for (AbstractMap.SimpleEntry<String, T> se : bucket) {
+            if (se.getKey().equals(name)) {
                 bucket.remove(i);
                 break;
             }
