@@ -4,7 +4,6 @@
  */
 package da.alg1000.oblig3;
 
-
 /**
  *
  * @author Martin
@@ -26,19 +25,22 @@ class Node<T> {
     public Node getNext() {
         return next;
     }
+
     public void setElement(T element) {
-        this.element=element;
+        this.element = element;
     }
 
     public void setNext(Node next) {
-        this.next=next;
+        this.next = next;
     }
-    public boolean hasNext(){
-        return next!=null;
+
+    public boolean hasNext() {
+        return next != null;
     }
+
     @Override
-    public String toString(){
-        return getElement()+"";
+    public String toString() {
+        return getElement() + "";
     }
 } //class Node
 
