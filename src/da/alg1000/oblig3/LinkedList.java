@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package da.alg1000.oblig3;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.concurrent.locks.*;
  *
  * @author Martin
  */
-class LinkedList<T> extends java.util.LinkedList {
+class LinkedList<T> extends java.util.LinkedList<T> {
 
     private Node<T> head;
     private int elements;
@@ -33,7 +34,7 @@ class LinkedList<T> extends java.util.LinkedList {
         }
     }
 
-    public Node getHead() {
+    public Node<T> getHead() {
         lock.lock();
         try {
             return head;
@@ -46,7 +47,7 @@ class LinkedList<T> extends java.util.LinkedList {
         int count = 0;
         lock.lock();
         try {
-            Node n = head;
+            Node<T> n = head;
             for (int i = 0; i < elements; i++) {
                 if (n.getElement().equals(element)) {
                     count++;
@@ -64,7 +65,7 @@ class LinkedList<T> extends java.util.LinkedList {
         String s = new String();
         lock.lock();
         try {
-            Node n = head;
+            Node<T> n = head;
             for (int i = 0; i < elements; i++) {
                 s += "{" + n + "}";
                 if ((i % 5) == 4) {
@@ -88,13 +89,13 @@ class LinkedList<T> extends java.util.LinkedList {
         }
     }
 
-    private Node nodeWithIndex(int index) {
+    private Node<T> nodeWithIndex(int index) {
         lock.lock();
         try {
             if (index < 0) {
                 return null;
             }
-            Node n = head;
+            Node<T> n = head;
             for (int i = 0; i < index; i++) {
                 n = n.getNext();
             }
@@ -104,14 +105,14 @@ class LinkedList<T> extends java.util.LinkedList {
         }
     }
 
-    private Node nodeWithElement(T element) {
+    private Node<T> nodeWithElement(T element) {
         lock.lock();
         try {
             if (head != null) {
                 if (head.getElement().equals(element)) {
                     return head;
                 }
-                Node n = head;
+                Node<T> n = head;
                 for (int i = 0; i < elements; i++) {
                     if (n.getElement().equals(element)) {
                         return n;
@@ -129,7 +130,7 @@ class LinkedList<T> extends java.util.LinkedList {
     void addItem(T element, int index) {
         lock.lock();
         try {
-            Node n = nodeWithIndex(index - 1);
+            Node<T> n = nodeWithIndex(index - 1);
             if (n != null) {
                 n.setNext(new Node(element, n.getNext()));
             } else if ((index <= 0) && (head != null)) {
@@ -158,7 +159,7 @@ class LinkedList<T> extends java.util.LinkedList {
                 if (index == 0) {
                     head = head.getNext();
                 } else {
-                    Node n = nodeWithIndex(index - 1);
+                    Node<T> n = nodeWithIndex(index - 1);
                     n.setNext(n.getNext().getNext());
                 }
                 elements--;
@@ -171,7 +172,7 @@ class LinkedList<T> extends java.util.LinkedList {
     int indexOfFirstMatch(T element) {
         lock.lock();
         try {
-            Node target = nodeWithElement(element), n = head;
+            Node<T> target = nodeWithElement(element), n = head;
             for (int i = 0; i < elements; i++) {
                 if (n.equals(target)) {
                     return i;
@@ -222,15 +223,14 @@ class LinkedList<T> extends java.util.LinkedList {
         }
     }
 
-
     @Override
     public boolean isEmpty() {
-        return elements==0;
+        return elements == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        return Count((T)o)>0;
+        return Count((T) o) > 0;
     }
 
     @Override
@@ -250,21 +250,21 @@ class LinkedList<T> extends java.util.LinkedList {
 
     @Override
     public boolean add(Object e) {
-        addItem((T)e);
+        addItem((T) e);
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        boolean b=this.Count((T)o)>0;
-        removeItemFirstMatch((T)o);
+        boolean b = this.Count((T) o) > 0;
+        removeItemFirstMatch((T) o);
         return b;
     }
 
     @Override
     public boolean containsAll(Collection c) {
-        boolean b=true;
-        for(Object o:c){
+        boolean b = true;
+        for (Object o : c) {
             contains(o);
         }
         return b;
@@ -272,7 +272,7 @@ class LinkedList<T> extends java.util.LinkedList {
 
     @Override
     public boolean addAll(Collection c) {
-        for(Object o:c){
+        for (Object o : c) {
             add(o);
         }
         return true;
@@ -285,7 +285,7 @@ class LinkedList<T> extends java.util.LinkedList {
 
     @Override
     public boolean removeAll(Collection c) {
-        for(Object o:c){
+        for (Object o : c) {
             remove(o);
         }
         return true;
@@ -302,14 +302,14 @@ class LinkedList<T> extends java.util.LinkedList {
     }
 
     @Override
-    public Object get(int index) {
-        return this.nodeWithIndex(index);
+    public T get(int index) {
+        return nodeWithIndex(index).getElement();
     }
 
     @Override
-    public Object set(int index, Object element) {
-        this.nodeWithIndex(index).setElement(element);
-        return true;
+    public T set(int index, T element) {
+        nodeWithIndex(index).setElement(element);
+        return nodeWithIndex(index).getElement();
     }
 
     @Override
@@ -318,15 +318,15 @@ class LinkedList<T> extends java.util.LinkedList {
     }
 
     @Override
-    public Object remove(int index) {
-        Object o=this.get(index);
+    public T remove(int index) {
+        T o = this.get(index);
         this.removeItem(index);
         return o;
     }
 
     @Override
     public int indexOf(Object o) {
-        return this.indexOfFirstMatch((T)o);
+        return this.indexOfFirstMatch((T) o);
     }
 
     @Override
