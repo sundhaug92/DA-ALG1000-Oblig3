@@ -9,39 +9,43 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  *
  * @author Martin
  */
-public class hashTable<T> {
+public class hashTable<TKey, TValue> {
 
-    ArrayList<LinkedList<AbstractMap.SimpleEntry<String, T>>> buckets;
+    ArrayList</*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>> buckets;
 
     public hashTable(int numberOfBuckets) {
         buckets = new ArrayList<>();
         for (int i = 0; i < numberOfBuckets; i++) {
-            buckets.add(new LinkedList<AbstractMap.SimpleEntry<String, T>>());
+            buckets.add(new LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>());
         }
     }
 
-    T get(String name) {
-        return getBucketFor(name).get(getIndexFor(name)).getValue();
+    TValue get(TKey Key) {
+        if(this.size()!=0){
+        return getBucketFor(Key).get(getIndexFor(Key)).getValue();
+        }
+        else return null;
     }
 
-    void set(String name, T value) {
-        getBucketFor(name).get(getIndexFor(name)).setValue(value);
+    void set(TKey Key, TValue value) {
+        getBucketFor(Key).get(getIndexFor(Key)).setValue(value);
     }
 
-    LinkedList<AbstractMap.SimpleEntry<String, T>> getBucketFor(String name) {
-        return buckets.get(getBucketIdFor(name));
+    /*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> getBucketFor(TKey key) {
+        return buckets.get(getBucketIdFor(key));
     }
 
-    int getIndexFor(String name) {
-        LinkedList<AbstractMap.SimpleEntry<String, T>> bucket = getBucketFor(name);
+    int getIndexFor(TKey Key) {
+        /*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
         int i = 0;
         for (Object o : bucket.toArray()) {
-            AbstractMap.SimpleEntry<String, T> entry = (AbstractMap.SimpleEntry<String, T>) o;
-            if (entry.getKey().equals(name)) {
+            AbstractMap.SimpleEntry<TKey, TValue> entry = (AbstractMap.SimpleEntry<TKey, TValue>) o;
+            if (entry.getKey().equals(Key)) {
                 return i;
             }
             i++;
@@ -49,10 +53,10 @@ public class hashTable<T> {
         return 0;
     }
 
-    String hash(String name) {
+    String hash(TKey Key) {
 
         String s = "";
-        byte[] buf = name.getBytes();
+        byte[] buf = Key.toString().getBytes();
         for (byte b : buf) {
             s += toHex(b);
         }
@@ -75,16 +79,16 @@ public class hashTable<T> {
         }
     }
 
-    int getBucketIdFor(String name) {
+    int getBucketIdFor(TKey key) {
         int i;
-        String h = hash(name).substring(0, name.length() < 4 ? name.length() : 7);
+        String h = hash(key).substring(0, key.toString().length() < 4 ? key.toString().length() : 7);
         i = Integer.parseInt(h.toLowerCase(), 16);
         return i % buckets.size();
     }
 
     int size() {
         int r = 0;
-        for (LinkedList<AbstractMap.SimpleEntry<String, T>> bucket : buckets) {
+        for (/*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket : buckets) {
             r += bucket.size();
         }
         return r;
@@ -94,15 +98,15 @@ public class hashTable<T> {
         return size() / buckets.size();
     }
 
-    void add(String name, T value) {
-        boolean add = getBucketFor(name).add(new AbstractMap.SimpleEntry<>(name, value));
+    void add(TKey Key, TValue value) {
+        getBucketFor(Key).add(new AbstractMap.SimpleEntry<>(Key, value));
     }
 
-    void remove(String name) {
+    void remove(TKey Key) {
         int i = 0;
-        LinkedList<AbstractMap.SimpleEntry<String, T>> bucket = getBucketFor(name);
-        for (AbstractMap.SimpleEntry<String, T> se : bucket) {
-            if (se.getKey().equals(name)) {
+        /*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
+        for (AbstractMap.SimpleEntry<TKey, TValue> se : bucket) {
+            if (se.getKey().equals(Key)) {
                 bucket.remove(i);
                 break;
             }

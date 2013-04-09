@@ -17,7 +17,7 @@ public class DAALG1000Oblig3 {
      */
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
-        hashTable<String> ht = new hashTable<>(15);
+        hashTable<String,Integer> ht = new hashTable<>(15);
         String key;
         
         while (true) {
@@ -28,12 +28,13 @@ public class DAALG1000Oblig3 {
                     key = inp.nextLine();
                     System.out.print("Value> ");
                     String value = inp.nextLine();
-                    ht.add(key, value);
+                    ht.add(key, Integer.parseInt(value));
                     break;
                 case 1:
                     System.out.print("Key> ");
                     key = inp.nextLine();
                     System.out.println(ht.get(key));
+                    break;
             }
         }
     }

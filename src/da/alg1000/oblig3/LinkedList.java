@@ -162,18 +162,18 @@ class LinkedList<T> extends java.util.LinkedList<T> {
     }
 
     @Override
-    public T[] toArray() {
+    public Object[] toArray() {
         ArrayList<T> r = new ArrayList<>();
 
         for (int i = 0; i < elements; i++) {
             r.add(get(i));
         }
 
-        return (T[]) r.toArray();
+        return r.toArray();
     }
 
     @Override
-    public T[] toArray(Object[] a) {
+    public Object[] toArray(Object[] a) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -276,6 +276,10 @@ class LinkedList<T> extends java.util.LinkedList<T> {
     @Override
     public List subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    @Override
+    public int size(){
+        return elements;
     }
 } //class LinkedList
 
