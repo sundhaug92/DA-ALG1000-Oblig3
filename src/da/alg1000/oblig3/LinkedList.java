@@ -3,13 +3,17 @@
  * and open the template in the editor.
  */
 package da.alg1000.oblig3;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.locks.*;
 
 /**
  *
  * @author Martin
  */
-class LinkedList<T> {
+class LinkedList<T> extends java.util.LinkedList {
 
     private Node<T> head;
     private int elements;
@@ -216,6 +220,133 @@ class LinkedList<T> {
         } finally {
             lock.unlock();
         }
+    }
+
+
+    @Override
+    public boolean isEmpty() {
+        return elements==0;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return Count((T)o)>0;
+    }
+
+    @Override
+    public Iterator iterator() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Object[] toArray() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Object[] toArray(Object[] a) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean add(Object e) {
+        addItem((T)e);
+        return true;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        boolean b=this.Count((T)o)>0;
+        removeItemFirstMatch((T)o);
+        return b;
+    }
+
+    @Override
+    public boolean containsAll(Collection c) {
+        boolean b=true;
+        for(Object o:c){
+            contains(o);
+        }
+        return b;
+    }
+
+    @Override
+    public boolean addAll(Collection c) {
+        for(Object o:c){
+            add(o);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection c) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean removeAll(Collection c) {
+        for(Object o:c){
+            remove(o);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean retainAll(Collection c) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void clear() {
+        reset();
+    }
+
+    @Override
+    public Object get(int index) {
+        return this.nodeWithIndex(index);
+    }
+
+    @Override
+    public Object set(int index, Object element) {
+        this.nodeWithIndex(index).setElement(element);
+        return true;
+    }
+
+    @Override
+    public void add(int index, Object element) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Object remove(int index) {
+        Object o=this.get(index);
+        this.removeItem(index);
+        return o;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        return this.indexOfFirstMatch((T)o);
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return -1;
+    }
+
+    @Override
+    public ListIterator listIterator() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public ListIterator listIterator(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List subList(int fromIndex, int toIndex) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 } //class LinkedList
 
