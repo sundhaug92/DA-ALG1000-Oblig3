@@ -42,7 +42,9 @@ public class hashTable<T> {
         int i=0;
         for(Object o:bucket.toArray()){
             AbstractMap.SimpleEntry<String,T> entry=(AbstractMap.SimpleEntry<String,T>)o;
-            if(entry.getKey()==name)return i;
+            if(entry.getKey().equals(name)) {
+                return i;
+            }
             i++;
         }
         return 0;
@@ -76,7 +78,7 @@ public class hashTable<T> {
     }
 
     int getBucketIdFor(String name) {
-        int i = 0;
+        int i;
         String h = "";
         try {
             h = hash(name).substring(0, 7);
@@ -100,9 +102,9 @@ public class hashTable<T> {
     }
 
     void add(String name, T value) {
-        getBucketFor(name).add(new AbstractMap.SimpleEntry<>(name,value));
+        boolean add = getBucketFor(name).add(new AbstractMap.SimpleEntry<>(name,value));
     }
     void remove(String name){
-        getBucketFor(name).remove(name);
+        boolean remove = getBucketFor(name).remove(name);
     }
 }
