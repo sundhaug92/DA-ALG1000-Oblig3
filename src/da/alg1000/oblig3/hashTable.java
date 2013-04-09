@@ -4,8 +4,7 @@
  */
 package da.alg1000.oblig3;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -50,11 +49,10 @@ public class hashTable<T> {
         return 0;
     }
 
-    String hash(String name) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
+    String hash(String name) {
 
         String s = "";
-        byte[] buf = md.digest(name.getBytes());
+        byte[] buf = name.getBytes();
         for (byte b : buf) {
             s += toHex(b);
         }
@@ -80,11 +78,7 @@ public class hashTable<T> {
     int getBucketIdFor(String name) {
         int i;
         String h = "";
-        try {
-            h = hash(name).substring(0, 7);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(hashTable.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        h = hash(name).substring(0, 7);
         i = Integer.parseInt(h.toLowerCase(), 16);
         return i % buckets.size();
     }
