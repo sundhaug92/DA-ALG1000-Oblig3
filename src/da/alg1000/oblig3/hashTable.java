@@ -77,8 +77,7 @@ public class hashTable<T> {
 
     int getBucketIdFor(String name) {
         int i;
-        String h = "";
-        h = hash(name).substring(0, 7);
+        String h = hash(name).substring(0, 7);
         i = Integer.parseInt(h.toLowerCase(), 16);
         return i % buckets.size();
     }
@@ -99,6 +98,14 @@ public class hashTable<T> {
         boolean add = getBucketFor(name).add(new AbstractMap.SimpleEntry<>(name,value));
     }
     void remove(String name){
-        boolean remove = getBucketFor(name).remove(name);
+        int i=0;
+        LinkedList<AbstractMap.SimpleEntry<String,T>> bucket= getBucketFor(name);
+        for(AbstractMap.SimpleEntry<String,T> se : bucket){
+            if(se.getKey().equals(name)){
+                bucket.remove(i);
+                break;
+            }
+            i++;
+        }
     }
 }
