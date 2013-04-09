@@ -17,12 +17,24 @@ public class DAALG1000Oblig3 {
      */
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
-        hashTable<String> ht = new hashTable(15);
-
-        for (;;) {
-            String key = inp.nextLine();
-            String value = inp.nextLine();
-            ht.add(key, value);
+        hashTable<String> ht = new hashTable<>(15);
+        String key;
+        
+        while (true) {
+            System.out.print("> ");
+            switch (Integer.parseInt(inp.nextLine())) {
+                case 0:
+                    System.out.print("Key> ");
+                    key = inp.nextLine();
+                    System.out.print("Value> ");
+                    String value = inp.nextLine();
+                    ht.add(key, value);
+                    break;
+                case 1:
+                    System.out.print("Key> ");
+                    key = inp.nextLine();
+                    System.out.println(ht.get(key));
+            }
         }
     }
 }
