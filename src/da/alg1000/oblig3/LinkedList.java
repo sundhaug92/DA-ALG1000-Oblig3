@@ -7,6 +7,7 @@ package da.alg1000.oblig3;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.ListIterator;
 
 /**
@@ -161,12 +162,18 @@ class LinkedList<T> extends java.util.LinkedList<T> {
     }
 
     @Override
-    public Object[] toArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public T[] toArray() {
+        ArrayList<T> r = new ArrayList<>();
+
+        for (int i = 0; i < elements; i++) {
+            r.add(get(i));
+        }
+
+        return (T[]) r.toArray();
     }
 
     @Override
-    public Object[] toArray(Object[] a) {
+    public T[] toArray(Object[] a) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
