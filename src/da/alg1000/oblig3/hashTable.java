@@ -6,15 +6,13 @@ package da.alg1000.oblig3;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
  *
  * @author Martin
  */
-public class hashTable<TKey, TValue> {
+public class hashTable<TKey, TValue>  {
 
     ArrayList</*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>> buckets;
 
@@ -94,8 +92,8 @@ public class hashTable<TKey, TValue> {
         return r;
     }
 
-    int calculateLoadFactor() {
-        return size() / buckets.size();
+    double calculateLoadFactor() {
+        return (double)size() / (double)buckets.size();
     }
 
     void add(TKey Key, TValue value) {
@@ -112,5 +110,16 @@ public class hashTable<TKey, TValue> {
             }
             i++;
         }
+    }
+    Object[] toArray(){
+        ArrayList<AbstractMap.SimpleEntry<TKey,TValue>> list=new ArrayList<>();
+        
+        for(LinkedList<AbstractMap.SimpleEntry<TKey,TValue>> bucket:buckets){
+            for (Object o : bucket.toArray()){
+                list.add((AbstractMap.SimpleEntry<TKey,TValue>)o);
+            }
+        }
+        
+        return list.toArray();
     }
 }
