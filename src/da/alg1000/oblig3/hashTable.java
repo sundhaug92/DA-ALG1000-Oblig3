@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class hashTable<TKey, TValue> {
 
-    ArrayList</*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>> buckets;
+    ArrayList<LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>> buckets;
 
     /**
      *
@@ -62,7 +62,7 @@ public class hashTable<TKey, TValue> {
      * @param Key
      * @return
      */
-    /*java.util.*/
+    
     LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> getBucketFor(TKey Key) {
         return buckets.get(getBucketIdFor(Key));
     }
@@ -73,7 +73,7 @@ public class hashTable<TKey, TValue> {
      * @return index of key, relative to the containing bucket
      */
     int getIndexFor(TKey Key) {
-        /*java.util.*/ LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
+         LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
         int i = 0;
         for (Object o : bucket.toArray()) {
             AbstractMap.SimpleEntry<TKey, TValue> entry = (AbstractMap.SimpleEntry<TKey, TValue>) o;
@@ -139,7 +139,7 @@ public class hashTable<TKey, TValue> {
      */
     int size() {
         int r = 0;
-        for (/*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket : buckets) {
+        for (LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket : buckets) {
             r += bucket.size();
         }
         return r;
@@ -170,7 +170,7 @@ public class hashTable<TKey, TValue> {
      */
     void remove(TKey Key) {
         int i = 0;
-        /*java.util.*/ LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
+         LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
         for (AbstractMap.SimpleEntry<TKey, TValue> se : bucket) {
             if (se.getKey().equals(Key)) {
                 bucket.remove(i);
