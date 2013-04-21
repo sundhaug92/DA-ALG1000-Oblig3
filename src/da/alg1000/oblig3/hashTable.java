@@ -7,12 +7,11 @@ package da.alg1000.oblig3;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author Martin
  */
-public class hashTable<TKey, TValue>  {
+public class hashTable<TKey, TValue> {
 
     ArrayList</*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>> buckets;
 
@@ -24,22 +23,24 @@ public class hashTable<TKey, TValue>  {
     }
 
     TValue get(TKey Key) {
-        if(this.size()!=0){
-        return getBucketFor(Key).get(getIndexFor(Key)).getValue();
+        if (this.size() != 0) {
+            return getBucketFor(Key).get(getIndexFor(Key)).getValue();
+        } else {
+            return null;
         }
-        else return null;
     }
 
     void set(TKey Key, TValue value) {
         getBucketFor(Key).get(getIndexFor(Key)).setValue(value);
     }
 
-    /*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> getBucketFor(TKey key) {
+    /*java.util.*/
+    LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> getBucketFor(TKey key) {
         return buckets.get(getBucketIdFor(key));
     }
 
     int getIndexFor(TKey Key) {
-        /*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
+        /*java.util.*/ LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
         int i = 0;
         for (Object o : bucket.toArray()) {
             AbstractMap.SimpleEntry<TKey, TValue> entry = (AbstractMap.SimpleEntry<TKey, TValue>) o;
@@ -93,16 +94,19 @@ public class hashTable<TKey, TValue>  {
     }
 
     double calculateLoadFactor() {
-        return (double)size() / (double)buckets.size();
+        return (double) size() / (double) buckets.size();
     }
 
     void add(TKey Key, TValue value) {
-        getBucketFor(Key).add(new AbstractMap.SimpleEntry<>(Key, value));
+        LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = this.getBucketFor(Key);
+        if (!contains(Key)) {
+            bucket.add(new AbstractMap.SimpleEntry<>(Key, value));
+        }
     }
 
     void remove(TKey Key) {
         int i = 0;
-        /*java.util.*/LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
+        /*java.util.*/ LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
         for (AbstractMap.SimpleEntry<TKey, TValue> se : bucket) {
             if (se.getKey().equals(Key)) {
                 bucket.remove(i);
@@ -111,15 +115,27 @@ public class hashTable<TKey, TValue>  {
             i++;
         }
     }
-    Object[] toArray(){
-        ArrayList<AbstractMap.SimpleEntry<TKey,TValue>> list=new ArrayList<>();
-        
-        for(LinkedList<AbstractMap.SimpleEntry<TKey,TValue>> bucket:buckets){
-            for (Object o : bucket.toArray()){
-                list.add((AbstractMap.SimpleEntry<TKey,TValue>)o);
+
+    Object[] toArray() {
+        ArrayList<AbstractMap.SimpleEntry<TKey, TValue>> list = new ArrayList<>();
+
+        for (LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket : buckets) {
+            for (Object o : bucket.toArray()) {
+                list.add((AbstractMap.SimpleEntry<TKey, TValue>) o);
             }
         }
-        
+
         return list.toArray();
+    }
+
+    public boolean contains(TKey Key) {
+        for (LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket : buckets) {
+            for (Object o : bucket.toArray()) {
+                if (((AbstractMap.SimpleEntry<TKey, TValue>) o).getKey().equals(Key)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
