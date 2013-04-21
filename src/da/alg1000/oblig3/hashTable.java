@@ -49,7 +49,7 @@ public class hashTable<TKey, TValue> {
             }
             i++;
         }
-        return 0;
+        return -1;
     }
 
     String hash(TKey Key) {
