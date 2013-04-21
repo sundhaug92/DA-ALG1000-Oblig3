@@ -33,16 +33,20 @@ public class DAALG1000Oblig3 {
             System.out.println("LF=" + ht.calculateLoadFactor());
             System.out.println();
             System.out.print("COMMAND> ");
-            System.out.println();
             switch (Integer.parseInt(inp.nextLine())) {
                 case 0:
+                    exitManager eM=new exitManager(1);
                     return;
                 case 1:
                     System.out.print("Key> ");
                     key = inp.nextLine();
                     System.out.print("Value> ");
                     String value = inp.nextLine();
-                    ht.add(key, value);
+                    if (!ht.contains(key)) {
+                        ht.add(key, value);
+                    } else {
+                        ht.set(key, value);
+                    }
                     break;
                 case 2:
                     System.out.print("Key> ");
@@ -51,7 +55,7 @@ public class DAALG1000Oblig3 {
                     break;
                 case 3:
                     for (Object o : ht.toArray()) {
-                        System.out.println("\"" + ((AbstractMap.SimpleEntry<String,String>)o).getKey() + "\":\"" + ((AbstractMap.SimpleEntry<String,String>)o).getValue() + "\"");
+                        System.out.println("\"" + ((AbstractMap.SimpleEntry<String, String>) o).getKey() + "\":\"" + ((AbstractMap.SimpleEntry<String, String>) o).getValue() + "\"");
                     }
                     break;
             }
