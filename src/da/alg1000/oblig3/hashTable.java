@@ -23,7 +23,7 @@ public class hashTable<TKey, TValue> {
     }
 
     TValue get(TKey Key) {
-        if (this.size() != 0) {
+        if (size() != 0&&contains(Key)) {
             return getBucketFor(Key).get(getIndexFor(Key)).getValue();
         } else {
             return null;
