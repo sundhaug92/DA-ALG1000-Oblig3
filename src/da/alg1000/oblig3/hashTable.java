@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @param <TKey> 
- * @param <TValue> 
+ * @param <TKey>
+ * @param <TValue>
  * @author Martin
  */
 public class hashTable<TKey, TValue> {
@@ -27,47 +27,48 @@ public class hashTable<TKey, TValue> {
             buckets.add(new LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>());
         }
     }
-    
+
     /**
-     * 
+     *
      * @param Key
      * @return value of element if it exists, or null
      */
     TValue get(TKey Key) {
-        if (size() != 0&&contains(Key)) {
+        if (size() != 0 && contains(Key)) {
             return getBucketFor(Key).get(getIndexFor(Key)).getValue();
         } else {
             return null;
         }
     }
-   
+
     /**
-     * 
+     *
      * @param Key key of the element
      * @param value new value of element
      * @return old value of element
      */
     TValue set(TKey Key, TValue value) {
-        if(contains(Key)){
-        TValue oldValue=get(Key);
-        getBucketFor(Key).get(getIndexFor(Key)).setValue(value);
-        return null;
+        if (contains(Key)) {
+            TValue oldValue = get(Key);
+            getBucketFor(Key).get(getIndexFor(Key)).setValue(value);
+            return null;
+        } else {
+            return null;
         }
-        else return null;
     }
 
     /**
-     * 
+     *
      * @param Key
-     * @return 
+     * @return
      */
     /*java.util.*/
     LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> getBucketFor(TKey Key) {
         return buckets.get(getBucketIdFor(Key));
     }
-    
+
     /**
-     * 
+     *
      * @param Key
      * @return index of key, relative to the containing bucket
      */
@@ -85,7 +86,7 @@ public class hashTable<TKey, TValue> {
     }
 
     /**
-     * 
+     *
      * @param Key
      * @return The hashed key
      */
@@ -98,10 +99,11 @@ public class hashTable<TKey, TValue> {
         }
         return s;
     }
+
     /**
-     * 
+     *
      * @param b byte to convert
-     * @return 
+     * @return
      */
     private static String toHex(byte b) {
         String s = "";
@@ -118,10 +120,11 @@ public class hashTable<TKey, TValue> {
             return (char) ('A' + (i - 10));
         }
     }
+
     /**
-     * 
+     *
      * @param Key
-     * @return 
+     * @return
      */
     int getBucketIdFor(TKey Key) {
         int i;
@@ -129,8 +132,9 @@ public class hashTable<TKey, TValue> {
         i = Integer.parseInt(h.toLowerCase(), 16);
         return i % buckets.size();
     }
+
     /**
-     * 
+     *
      * @return Total number of elements
      */
     int size() {
@@ -140,17 +144,18 @@ public class hashTable<TKey, TValue> {
         }
         return r;
     }
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     double calculateLoadFactor() {
         return (double) size() / (double) buckets.size();
     }
-    
+
     /**
      * @param Key
-     * @param value 
+     * @param value
      */
     void add(TKey Key, TValue value) {
         LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = this.getBucketFor(Key);
@@ -158,10 +163,10 @@ public class hashTable<TKey, TValue> {
             bucket.add(new AbstractMap.SimpleEntry<>(Key, value));
         }
     }
-    
+
     /**
-     * 
-     * @param Key 
+     *
+     * @param Key
      */
     void remove(TKey Key) {
         int i = 0;
@@ -174,9 +179,9 @@ public class hashTable<TKey, TValue> {
             i++;
         }
     }
-    
+
     /**
-     * 
+     *
      * @return table as array
      */
     Object[] toArray() {

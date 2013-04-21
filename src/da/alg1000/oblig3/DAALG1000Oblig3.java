@@ -35,7 +35,7 @@ public class DAALG1000Oblig3 {
             System.out.print("COMMAND> ");
             switch (Integer.parseInt(inp.nextLine())) {
                 case 0:
-                    exitManager eM=new exitManager(1);
+                    exitManager eM = new exitManager(1);
                     return;
                 case 1:
                     System.out.print("Key> ");

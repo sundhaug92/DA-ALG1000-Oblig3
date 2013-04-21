@@ -277,8 +277,9 @@ class LinkedList<T> extends java.util.LinkedList<T> {
     public List subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
     @Override
-    public int size(){
+    public int size() {
         return elements;
     }
 } //class LinkedList
