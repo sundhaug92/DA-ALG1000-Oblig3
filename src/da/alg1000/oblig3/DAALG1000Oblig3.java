@@ -20,8 +20,12 @@ public class DAALG1000Oblig3 {
         Scanner inp = new Scanner(System.in);
 
 
-        System.out.print("Number-of-buckets> ");
-        hashTable<String, String> ht = new hashTable<>(Integer.parseInt(inp.nextLine()));
+        int buckets = 0;
+        while (buckets == 0) {
+            System.out.print("Number-of-buckets> ");
+            Integer.parseInt(inp.nextLine());
+        }
+        hashTable<String, String> ht = new hashTable<>(buckets);
         String key;
 
         while (true) {
