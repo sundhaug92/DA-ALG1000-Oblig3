@@ -23,7 +23,13 @@ public class DAALG1000Oblig3 {
         int buckets = 0;
         while (buckets == 0) {
             System.out.print("Number-of-buckets> ");
-            buckets=Integer.parseInt(inp.nextLine());
+            String s = inp.nextLine();
+            if (!s.trim().equals("")) {
+                try {
+                    buckets = Integer.parseInt(s);
+                } catch (Exception e) {
+                }
+            }
         }
         hashTable<String, String> ht = new hashTable<>(buckets);
         String key;
@@ -36,10 +42,23 @@ public class DAALG1000Oblig3 {
             System.out.println("3: Print table");
             System.out.println("LF=" + ht.calculateLoadFactor());
             System.out.println();
-            System.out.print("COMMAND> ");
-            switch (Integer.parseInt(inp.nextLine())) {
+            int i = 0;
+            do {
+                System.out.print("COMMAND> ");
+                String s = inp.nextLine();
+                if (!s.trim().equals("")) {
+                    try {
+                        i = Integer.parseInt(s);
+                    } catch (Exception e) {
+                    }
+                }
+            } while (i == 0);
+            switch (i) {
                 case 0:
-                    exitManager eM = new exitManager(1);
+                    try {
+                        exitManager eM = new exitManager(1);
+                    } catch (Exception e) {
+                    }
                     return;
                 case 1:
                     System.out.print("Key> ");
@@ -61,6 +80,9 @@ public class DAALG1000Oblig3 {
                     for (Object o : ht.toArray()) {
                         System.out.println("\"" + ((AbstractMap.SimpleEntry<String, String>) o).getKey() + "\":\"" + ((AbstractMap.SimpleEntry<String, String>) o).getValue() + "\"");
                     }
+                    break;
+                default:
+                    System.out.println("Invalid option");
                     break;
             }
         }
