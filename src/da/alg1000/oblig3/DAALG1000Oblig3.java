@@ -23,7 +23,7 @@ public class DAALG1000Oblig3 {
         int buckets = 0;
         while (buckets == 0) {
             System.out.print("Number-of-buckets> ");
-            Integer.parseInt(inp.nextLine());
+            buckets=Integer.parseInt(inp.nextLine());
         }
         hashTable<String, String> ht = new hashTable<>(buckets);
         String key;
