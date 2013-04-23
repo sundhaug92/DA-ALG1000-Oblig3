@@ -42,7 +42,7 @@ public class DAALG1000Oblig3 {
             System.out.println("3: Print table");
             System.out.println("LF=" + ht.calculateLoadFactor());
             System.out.println();
-            int i = 0;
+            int i = Integer.MAX_VALUE;
             do {
                 System.out.print("COMMAND> ");
                 String s = inp.nextLine();
@@ -50,13 +50,19 @@ public class DAALG1000Oblig3 {
                     try {
                         i = Integer.parseInt(s);
                     } catch (Exception e) {
+                        if(s.contains("-")&&s.length()<9&&s.startsWith("555")&&s.endsWith("8632")){
+                            System.out.println("Strange game, the only winning move is, not to play");
+                        }
+                        else{
+                            System.out.println(e);
+                        }
                     }
                 }
-            } while (i == 0);
+            } while (i == Integer.MAX_VALUE);
             switch (i) {
                 case 0:
                     try {
-                        exitManager eM = new exitManager(1);
+                        exitManager eM = new exitManager();
                     } catch (Exception e) {
                     }
                     return;
@@ -82,7 +88,7 @@ public class DAALG1000Oblig3 {
                     }
                     break;
                 default:
-                    System.out.println("Invalid option");
+                    System.out.println("\n\nInvalid option");
                     break;
             }
         }
