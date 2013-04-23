@@ -51,7 +51,7 @@ public class hashTable<TKey, TValue> {
         if (contains(Key)) {
             TValue oldValue = get(Key);
             getBucketFor(Key).get(getIndexFor(Key)).setValue(value);
-            return null;
+            return oldValue;
         } else {
             return null;
         }
