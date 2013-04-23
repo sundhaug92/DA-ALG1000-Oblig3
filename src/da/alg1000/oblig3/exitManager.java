@@ -15,6 +15,7 @@ import java.net.URL;
  */
 public final class exitManager {
 
+
     void printSenter(String str) {
         for (int i = (40 - str.length()) / 2; i > 0; i--) {
             System.out.print(" ");
@@ -22,7 +23,7 @@ public final class exitManager {
         System.out.println(str);
     }
 
-    exitManager(int instrument) throws MalformedURLException, IOException, MidiUnavailableException, InvalidMidiDataException {
+    exitManager() throws MalformedURLException, IOException, MidiUnavailableException, InvalidMidiDataException {
         try {
             URL url = new URL("http://www.tsr.org/StarWars/multimedia/midi/thronenend.mid");
 
