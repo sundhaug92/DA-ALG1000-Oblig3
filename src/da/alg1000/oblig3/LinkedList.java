@@ -15,23 +15,23 @@ import java.util.ListIterator;
  * @author Martin
  */
 class LinkedList<T> extends java.util.LinkedList<T> {
-
+    
     private Node<T> head;
     private int elements;
-
+    
     public LinkedList() {
         head = null;
         elements = 0;
     }
-
+    
     public int getElements() {
         return elements;
     }
-
+    
     public Node<T> getHead() {
         return head;
     }
-
+    
     public int Count(T element) {
         int count = 0;
         Node<T> n = head;
@@ -43,7 +43,7 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         return count;
     }
-
+    
     @Override
     public String toString() {
         String s = new String();
@@ -57,12 +57,12 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         return s;
     }
-
+    
     public void reset() {
         elements = 0;
         head = null;
     }
-
+    
     private Node<T> nodeWithIndex(int index) {
         if (index < 0) {
             return null;
@@ -73,7 +73,7 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         return n;
     }
-
+    
     private Node<T> nodeWithElement(T element) {
         if (head != null) {
             if (head.getElement().equals(element)) {
@@ -89,7 +89,7 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         return null;
     }
-
+    
     void addItem(T element, int index) {
         Node<T> n = nodeWithIndex(index - 1);
         if (n != null) {
@@ -101,11 +101,11 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         elements++;
     }
-
+    
     void addItem(T element) {
         addItem(element, elements);
     }
-
+    
     void removeItem(int index) {
         if (head != null) {
             if (index == 0) {
@@ -117,7 +117,7 @@ class LinkedList<T> extends java.util.LinkedList<T> {
             elements--;
         }
     }
-
+    
     int indexOfFirstMatch(T element) {
         Node<T> target = nodeWithElement(element), n = head;
         for (int i = 0; i < elements; i++) {
@@ -128,68 +128,68 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         return -1;
     }
-
+    
     void removeItemFirstMatch(T matchElement) {
         removeItem(indexOfFirstMatch(matchElement));
     }
-
+    
     void addItemAfterFirstMatch(T element, T matchElement) {
         addItem(element, indexOfFirstMatch(matchElement) + 1);
     }
-
+    
     void addItemBeforeFirstMatch(T element, T matchElement) {
         addItem(element, indexOfFirstMatch(matchElement) - 1);
     }
-
+    
     void removeLastItem() {
         removeItem(elements - 1);
-
+        
     }
-
+    
     @Override
     public boolean isEmpty() {
         return elements == 0;
     }
-
+    
     @Override
     public boolean contains(Object o) {
         return Count((T) o) > 0;
     }
-
+    
     @Override
     public Iterator iterator() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public Object[] toArray() {
         ArrayList<T> r = new ArrayList<>();
-
+        
         for (int i = 0; i < elements; i++) {
             r.add(get(i));
         }
-
+        
         return r.toArray();
     }
-
+    
     @Override
     public Object[] toArray(Object[] a) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public boolean add(Object e) {
         addItem((T) e);
         return true;
     }
-
+    
     @Override
     public boolean remove(Object o) {
         boolean b = this.Count((T) o) > 0;
         removeItemFirstMatch((T) o);
         return b;
     }
-
+    
     @Override
     public boolean containsAll(Collection c) {
         boolean b = true;
@@ -198,7 +198,7 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         return b;
     }
-
+    
     @Override
     public boolean addAll(Collection c) {
         for (Object o : c) {
@@ -206,12 +206,12 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         return true;
     }
-
+    
     @Override
     public boolean addAll(int index, Collection c) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public boolean removeAll(Collection c) {
         for (Object o : c) {
@@ -219,79 +219,79 @@ class LinkedList<T> extends java.util.LinkedList<T> {
         }
         return true;
     }
-
+    
     @Override
     public boolean retainAll(Collection c) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public void clear() {
         reset();
     }
-
+    
     @Override
     public T get(int index) {
         return nodeWithIndex(index).getElement();
     }
-
+    
     @Override
     public T set(int index, T element) {
         nodeWithIndex(index).setElement(element);
         return nodeWithIndex(index).getElement();
     }
-
+    
     @Override
     public void add(int index, Object element) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public T remove(int index) {
         T o = this.get(index);
         this.removeItem(index);
         return o;
     }
-
+    
     @Override
     public int indexOf(Object o) {
         return this.indexOfFirstMatch((T) o);
     }
-
+    
     @Override
     public int lastIndexOf(Object o) {
         int r = -1;
-        Node<T> target = nodeWithElement(element), n = head;
+        Node<T> n = head;
         for (int i = 0; i < elements; i++) {
-            if (n.equals(target)) {
+            if (n.getElement().equals((T) o)) {
                 r = i;
             }
             n = n.getNext();
         }
         return r;
     }
-
+    
     @Override
     public ListIterator listIterator() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public ListIterator listIterator(int index) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public List subList(int fromIndex, int toIndex) {
         ArrayList al = new ArrayList();
-
+        
         for (int i = fromIndex; i <= toIndex; i++) {
             al.add(toArray()[i]);
         }
-
+        
         return al;
     }
-
+    
     @Override
     public int size() {
         return elements;
