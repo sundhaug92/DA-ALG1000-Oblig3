@@ -51,7 +51,7 @@ public class DAALG1000Oblig3 {
         }
         AccessOptimizationPolicy OptimizationPolicy = op == 0 ? AccessOptimizationPolicy.None : op == 1 ? AccessOptimizationPolicy.MostRecentlyUsed : AccessOptimizationPolicy.LeastRecentlyUsed;
 
-        hashTable<String, String> ht = new hashTable<>(buckets, OptimizationPolicy);
+        HashTable<String, String> ht = new HashTable<>(buckets, OptimizationPolicy);
         String key;
 
         while (true) {
