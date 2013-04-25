@@ -39,7 +39,8 @@ public class DAALG1000Oblig3 {
             System.out.println("0: Quit");
             System.out.println("1: Store");
             System.out.println("2: Retrieve");
-            System.out.println("3: Print table");
+            System.out.println("3: Delete");
+            System.out.println("4: Print table");
             System.out.println("LF=" + ht.calculateLoadFactor());
             System.out.println();
             int i = Integer.MAX_VALUE;
@@ -50,10 +51,9 @@ public class DAALG1000Oblig3 {
                     try {
                         i = Integer.parseInt(s);
                     } catch (Exception e) {
-                        if(s.contains("-")&&s.length()<9&&s.startsWith("555")&&s.endsWith("8632")){
+                        if (s.contains("-") && s.length() < 9 && s.startsWith("555") && s.endsWith("8632")) {
                             System.out.println("Strange game, the only winning move is, not to play");
-                        }
-                        else{
+                        } else {
                             System.out.println(e);
                         }
                     }
@@ -83,6 +83,11 @@ public class DAALG1000Oblig3 {
                     System.out.println(ht.get(key));
                     break;
                 case 3:
+                    System.out.print("Key> ");
+                    key = inp.nextLine();
+                    ht.remove(key);
+                    break;
+                case 4:
                     for (Object o : ht.toArray()) {
                         System.out.println("\"" + ((AbstractMap.SimpleEntry<String, String>) o).getKey() + "\":\"" + ((AbstractMap.SimpleEntry<String, String>) o).getValue() + "\"");
                     }
