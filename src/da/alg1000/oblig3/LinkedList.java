@@ -260,7 +260,15 @@ class LinkedList<T> extends java.util.LinkedList<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        return -1;
+        int r = -1;
+        Node<T> target = nodeWithElement(element), n = head;
+        for (int i = 0; i < elements; i++) {
+            if (n.equals(target)) {
+                r = i;
+            }
+            n = n.getNext();
+        }
+        return r;
     }
 
     @Override
@@ -275,7 +283,13 @@ class LinkedList<T> extends java.util.LinkedList<T> {
 
     @Override
     public List subList(int fromIndex, int toIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ArrayList al = new ArrayList();
+
+        for (int i = fromIndex; i <= toIndex; i++) {
+            al.add(toArray()[i]);
+        }
+
+        return al;
     }
 
     @Override
