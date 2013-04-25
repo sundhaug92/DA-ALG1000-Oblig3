@@ -35,8 +35,8 @@ public class DAALG1000Oblig3 {
         int op = 0;
         while (op == 0) {
             System.out.println("0: None");
-            System.out.println("1: MRU");
-            System.out.println("0: LRU");
+            System.out.println("1: Most recently used");
+            System.out.println("2: Least recently used");
             System.out.print("Access optimization policy> ");
             String s = inp.nextLine();
             if (!s.trim().equals("")) {
