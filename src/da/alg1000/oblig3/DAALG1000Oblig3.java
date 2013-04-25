@@ -31,7 +31,27 @@ public class DAALG1000Oblig3 {
                 }
             }
         }
-        hashTable<String, String> ht = new hashTable<>(buckets);
+
+        int op = 0;
+        while (op == 0) {
+            System.out.println("0: None");
+            System.out.println("1: MRU");
+            System.out.println("0: LRU");
+            System.out.print("Access optimization policy> ");
+            String s = inp.nextLine();
+            if (!s.trim().equals("")) {
+                try {
+                    op = Integer.parseInt(s);
+                    if (!(op >= 0 && op < 3)) {
+                        continue;
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+        AccessOptimizationPolicy OptimizationPolicy = op == 0 ? AccessOptimizationPolicy.None : op == 1 ? AccessOptimizationPolicy.MostRecentlyUsed : AccessOptimizationPolicy.LeastRecentlyUsed;
+
+        hashTable<String, String> ht = new hashTable<>(buckets, OptimizationPolicy);
         String key;
 
         while (true) {

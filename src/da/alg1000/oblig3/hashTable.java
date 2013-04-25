@@ -16,12 +16,13 @@ import java.util.ArrayList;
 public class hashTable<TKey, TValue> {
 
     ArrayList<LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>> buckets;
+    AccessOptimizationPolicy OptimizationPolicy;
 
     /**
      *
      * @param numberOfBuckets
      */
-    public hashTable(int numberOfBuckets) {
+    public hashTable(int numberOfBuckets, AccessOptimizationPolicy OptimizationPolicy) {
         buckets = new ArrayList<>();
         for (int i = 0; i < numberOfBuckets; i++) {
             buckets.add(new LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>());
@@ -35,7 +36,14 @@ public class hashTable<TKey, TValue> {
      */
     TValue get(TKey Key) {
         if (size() != 0 && contains(Key)) {
-            return getBucketFor(Key).get(getIndexFor(Key)).getValue();
+            TValue Value = getBucketFor(Key).get(getIndexFor(Key)).getValue();
+
+            if (OptimizationPolicy != AccessOptimizationPolicy.None) {
+                remove(Key);
+                add(Key, Value);
+            }
+
+            return Value;
         } else {
             return null;
         }
@@ -47,10 +55,15 @@ public class hashTable<TKey, TValue> {
      * @param value new value of element
      * @return old value of element
      */
-    TValue set(TKey Key, TValue value) {
+    TValue set(TKey Key, TValue Value) {
         if (contains(Key)) {
             TValue oldValue = get(Key);
-            getBucketFor(Key).get(getIndexFor(Key)).setValue(value);
+            if (OptimizationPolicy != AccessOptimizationPolicy.None) {
+                remove(Key);
+                add(Key, Value);
+            } else {
+                getBucketFor(Key).get(getIndexFor(Key)).setValue(Value);
+            }
             return oldValue;
         } else {
             return null;
@@ -62,7 +75,6 @@ public class hashTable<TKey, TValue> {
      * @param Key
      * @return
      */
-    
     LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> getBucketFor(TKey Key) {
         return buckets.get(getBucketIdFor(Key));
     }
@@ -73,7 +85,7 @@ public class hashTable<TKey, TValue> {
      * @return index of key, relative to the containing bucket
      */
     int getIndexFor(TKey Key) {
-         LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
+        LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
         int i = 0;
         for (Object o : bucket.toArray()) {
             AbstractMap.SimpleEntry<TKey, TValue> entry = (AbstractMap.SimpleEntry<TKey, TValue>) o;
@@ -160,7 +172,11 @@ public class hashTable<TKey, TValue> {
     void add(TKey Key, TValue value) {
         LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = this.getBucketFor(Key);
         if (!contains(Key)) {
-            bucket.add(new AbstractMap.SimpleEntry<>(Key, value));
+            if (OptimizationPolicy != AccessOptimizationPolicy.LeastRecentlyUsed) {
+                bucket.add(new AbstractMap.SimpleEntry<>(Key, value));
+            } else {
+                bucket.addLast(new AbstractMap.SimpleEntry<>(Key, value));
+            }
         }
     }
 
@@ -170,7 +186,7 @@ public class hashTable<TKey, TValue> {
      */
     void remove(TKey Key) {
         int i = 0;
-         LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
+        LinkedList<AbstractMap.SimpleEntry<TKey, TValue>> bucket = getBucketFor(Key);
         for (AbstractMap.SimpleEntry<TKey, TValue> se : bucket) {
             if (se.getKey().equals(Key)) {
                 bucket.remove(i);
