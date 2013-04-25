@@ -15,7 +15,6 @@ import java.net.URL;
  */
 public final class exitManager {
 
-
     void printSenter(String str) {
         for (int i = (40 - str.length()) / 2; i > 0; i--) {
             System.out.print(" ");

@@ -9,5 +9,6 @@ package da.alg1000.oblig3;
  * @author Martin
  */
 public enum AccessOptimizationPolicy {
+
     None, LeastRecentlyUsed, MostRecentlyUsed;
 }

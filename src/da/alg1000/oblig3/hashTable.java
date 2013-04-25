@@ -103,7 +103,6 @@ public class hashTable<TKey, TValue> {
      * @return The hashed key
      */
     String hash(TKey Key) {
-
         String s = "";
         byte[] buf = Key.toString().getBytes();
         for (byte b : buf) {
