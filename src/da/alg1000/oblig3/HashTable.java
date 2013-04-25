@@ -36,9 +36,10 @@ public class HashTable<TKey, TValue> {
      */
     TValue get(TKey Key) {
         if (size() != 0 && contains(Key)) {
-            TValue Value = getBucketFor(Key).get(getIndexFor(Key)).getValue();
+            int index = getIndexFor(Key);
+            TValue Value = getBucketFor(Key).get(index).getValue();
 
-            if (OptimizationPolicy != AccessOptimizationPolicy.None) {
+            if (OptimizationPolicy != AccessOptimizationPolicy.None && ((index != 0 && OptimizationPolicy == AccessOptimizationPolicy.MostRecentlyUsed || (index != getBucketFor(Key).size() - 1 && OptimizationPolicy == AccessOptimizationPolicy.LeastRecentlyUsed)))) {
                 remove(Key);
                 add(Key, Value);
             }
@@ -58,7 +59,8 @@ public class HashTable<TKey, TValue> {
     TValue set(TKey Key, TValue Value) {
         if (contains(Key)) {
             TValue oldValue = get(Key);
-            if (OptimizationPolicy != AccessOptimizationPolicy.None) {
+            int index = getIndexFor(Key);
+            if (OptimizationPolicy != AccessOptimizationPolicy.None && ((index != 0 && OptimizationPolicy == AccessOptimizationPolicy.MostRecentlyUsed || (index != getBucketFor(Key).size() - 1 && OptimizationPolicy == AccessOptimizationPolicy.LeastRecentlyUsed)))) {
                 remove(Key);
                 add(Key, Value);
             } else {
