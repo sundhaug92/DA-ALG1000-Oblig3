@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @param <TValue>
  * @author Martin
  */
-public class hashTable<TKey, TValue> {
+public class HashTable<TKey, TValue> {
 
     ArrayList<LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>> buckets;
     AccessOptimizationPolicy OptimizationPolicy;
@@ -22,7 +22,7 @@ public class hashTable<TKey, TValue> {
      *
      * @param numberOfBuckets
      */
-    public hashTable(int numberOfBuckets, AccessOptimizationPolicy OptimizationPolicy) {
+    public HashTable(int numberOfBuckets, AccessOptimizationPolicy OptimizationPolicy) {
         buckets = new ArrayList<>();
         for (int i = 0; i < numberOfBuckets; i++) {
             buckets.add(new LinkedList<AbstractMap.SimpleEntry<TKey, TValue>>());
